@@ -66,7 +66,17 @@ if check_duplicate "$subject" "$question"; then
 fi
 
 # 步骤3：生成唯一ID和存储路径
-id=$(generate_id)
+# 顺序自增ID：1、2、3、4...
+ID_FILE="../../data/id_counter.txt"
+# 如果文件不存在，初始化为1
+if [ ! -f "$ID_FILE" ]; then
+  echo 1 > "$ID_FILE"
+fi
+# 读取当前ID
+id=$(cat "$ID_FILE")
+# 自增+1，保存回去
+next_id=$((id + 1))
+echo $next_id > "$ID_FILE"
 timestamp=$(date +%Y%m%d_%H%M%S)
 # 按科目/年/月/日分层存储
 date_dir=$(date +%Y/%m/%d)
