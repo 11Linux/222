@@ -1,0 +1,15 @@
+# 临时文件
+*.tmp
+*.swp
+*.swo
+
+# 日志文件
+data/logs/*
+
+# 错题数据和备份
+data/subjects/*
+data/revisions/*
+
+# 系统文件
+.DS_Store
+Thumbs.db
