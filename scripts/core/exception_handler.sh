@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
-LOG_DIR="$(dirname "$0")/../../data/logs"
+
+# 获取脚本所在的绝对路径
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOG_DIR="$SCRIPT_DIR/../../data/logs"
 ERR_LOG="$LOG_DIR/error.log"
+
+# 创建日志目录
 mkdir -p "$LOG_DIR"
 
 # 检查日志文件的权限
