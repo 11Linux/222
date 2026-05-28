@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 LOG_DIR="$(dirname "$0")/../../data/logs"
-ERR_LOG="$LOG_DIR/system.log"
+ERR_LOG="$LOG_DIR/error.log"
 mkdir -p "$LOG_DIR"
 
+# 检查日志文件的权限
+if [[ ! -w "$ERR_LOG" ]]; then
+    echo "Error: No write permission to log file $ERR_LOG" >&2
+    exit 1
+fi
+
+log_info() {
+    echo "[$(date '+%F %T')] INFO: $*" >> "$ERR_LOG"
+}
 log_error() {
     echo "[$(date '+%F %T')] ERROR: $*" >> "$ERR_LOG"
 }
