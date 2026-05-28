@@ -5,11 +5,12 @@
 
 # 导入异常处理模块
 source scripts/core/exception_handler.sh
+
 # 定位仓库根目录（脚本位于 scripts/core/）
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 # 内部固定路径
-REVIEW_LOG=:e scripts/core/review_notify.sh"$REPO_ROOT/data/logs/review.log"
+REVIEW_LOG="$REPO_ROOT/data/logs/review.log"
 DATA_DIR="$REPO_ROOT/data"
 SUBJECTS_DIR="$DATA_DIR/subjects"
 
