@@ -71,6 +71,23 @@ needs_review() {
     return 1 # 否则返回1
 }
 
+# 更新Markdown文件中的复习状态和次数
+update_markdown_file() {
+    local file_path=$1
+    local new_status=$2
+    local new_count=$3
+
+    # 读取文件内容
+    content=$(cat "$file_path")
+
+    # 更新复习状态和次数
+    content=$(echo "$content" | sed "s/review_status: [^ ]*/review_status: $new_status/g")
+    content=$(echo "$content" | sed "s/review_count: [^ ]*/review_count: $new_count/g")
+
+    # 写回文件
+    echo "$content" > "$file_path"
+}
+
 # ===== 主流程 =====
 # 收集所有错题
 mapfile -t candidates < <(find "$DATA_DIR/subjects" -type f -name "*.txt")
@@ -102,6 +119,25 @@ if [[ $completed == "y" ]]; then
     echo "[$(date '+%F %T')] 完成复习: $(basename "$choice")" >> "$REVIEW_LOG"
     notify-send "复习完成" "您已完成今日复习: $(basename "$choice")"
     echo "✅ 已打卡"
+
+    # 读取Markdown文件，更新复习状态和次数
+    review_status=$(grep "review_status" "$choice" | awk '{print $2}' | tr -d '"')
+    review_count=$(grep "review_count" "$choice" | awk '{print $2}' | tr -d '"')
+    
+    if [[ -z "$review_status" || -z "$review_count" ]]; then
+        echo "Error: Unable to read review status or count from $choice"
+    else
+        if [[ "$review_status" == "未复习" ]]; then
+            new_status="已复习"
+            ((review_count++))
+        else
+            new_status="已复习"
+            ((review_count++))
+        fi
+
+        # 更新Markdown文件
+        update_markdown_file "$choice" "$new_status" "$review_count"
+    fi
 else
     echo "[$(date '+%F %T')] 未完成复习: $(basename "$choice")" >> "$REVIEW_LOG"
     notify-send "复习提醒" "您未完成今日复习: $(basename "$choice")"
