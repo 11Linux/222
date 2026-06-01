@@ -27,3 +27,20 @@ create_markdown_file() {
     # 写入Markdown文件
     echo "$template" > "$output_file"
 }
+
+# 函数：更新Markdown文件中的复习状态和次数
+update_markdown_file() {
+    local file_path=$1
+    local new_status=$2
+    local new_count=$3
+
+    # 读取文件内容
+    content=$(cat "$file_path")
+
+    # 更新复习状态和次数
+    content=$(echo "$content" | sed "s/review_status: [^ ]*/review_status: $new_status/g")
+    content=$(echo "$content" | sed "s/review_count: [^ ]*/review_count: $new_count/g")
+
+    # 写回文件
+    echo "$content" > "$file_path"
+}
