@@ -1,5 +1,13 @@
 #!/bin/bash
+# 导入异常处理模块
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+EXCEPTION_HANDLER_PATH="$SCRIPT_DIR/exception_handler.sh"
 
+if [ -f "$EXCEPTION_HANDLER_PATH" ]; then
+    source "$EXCEPTION_HANDLER_PATH"
+else
+    echo "警告: exception_handler.sh 未找到，跳过异常处理"
+fi
 # ============================================
 # 错题统计分析模块
 # 用法：./stat_report.sh
