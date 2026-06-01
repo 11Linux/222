@@ -3,16 +3,24 @@
 # 每日随机抽取 1 道当天需要复习的错题
 # 复习间隔遵循艾宾浩斯曲线：1 2 4 7 15 30 天
 
-# 导入异常处理模块
-# 动态获取当前脚本所在的目录
+# 导入异常处理模块和配置
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 EXCEPTION_HANDLER_PATH="$SCRIPT_DIR/exception_handler.sh"
+CONFIG_PATH="$SCRIPT_DIR/../../config/global.conf"
 
 # 检查 exception_handler.sh 文件是否存在
 if [ -f "$EXCEPTION_HANDLER_PATH" ]; then
     source "$EXCEPTION_HANDLER_PATH"
 else
     echo "Error: exception_handler.sh not found at $EXCEPTION_HANDLER_PATH"
+    exit 1
+fi
+
+# 加载配置
+if [ -f "$CONFIG_PATH" ]; then
+    source "$CONFIG_PATH"
+else
+    echo "Error: Config file not found at $CONFIG_PATH"
     exit 1
 fi
 
@@ -79,10 +87,16 @@ done
 if ((${#to_review[@]} == 0)); then
     msg="[$(date '+%F %T')] 今日无待复习错题"
     echo "$msg" | tee -a "$REVIEW_LOG"
+    notify-send "复习提醒" "今日无待复习错题"
     exit 0
 fi
 
 # 随机挑选 1 道
 choice=${to_review[$RANDOM % ${#to_review[@]}]}
 echo "[$(date '+%F %T')] 今日复习: $(basename "$choice")" >> "$REVIEW_LOG"
-cat "$choice"
+notify-send "复习提醒" "今日复习: $(basename "$choice")"
+
+# 复习打卡功能
+read -p "是否完成复习？(y/n): " completed
+if [[ $completed == "y" ]]; then
+    echo "[$(date '+%F %T')] 完成复习: $(basename "$choice")" >> "$REVIEW_LOG"  
