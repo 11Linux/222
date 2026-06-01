@@ -10,16 +10,17 @@ mkdir -p "$LOG_DIR"
 
 # 核心错误处理函数
 handle_error() {
-    local exit_code=$?
-    local failed_command="$BASH_COMMAND"
-    local line_number="$LINENO"
-    local script_name="$0"
+    local exit_code=$1
+    local failed_command=$2
+    local line_number=$3
+    local script_name=$4
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
     # 写入错误日志
     echo "[$timestamp] ERROR in $script_name (line $line_number):" >> "$LOG_FILE"
     echo "  Command: $failed_command" >> "$LOG_FILE"
     echo "  Exit code: $exit_code" >> "$LOG_FILE"
+    echo "  Working Directory: $(pwd)" >> "$LOG_FILE"
     echo "  ----------------------------------------" >> "$LOG_FILE"
 
     # 给用户友好提示
@@ -31,7 +32,7 @@ handle_error() {
 }
 
 # 捕获所有错误信号（只要有命令执行失败，就自动调用handle_error）
-trap 'handle_error' ERR
+trap 'handle_error $? $BASH_COMMAND $LINENO $0' ERR
 
 # 开启严格模式（让脚本更健壮）
 set -o errexit  # 任何命令失败立即退出
