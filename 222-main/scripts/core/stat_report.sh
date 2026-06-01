@@ -14,20 +14,8 @@ fi
 # ============================================
 
 # 仓库根目录
-# --- 开始替换 ---
-
-# 1. 自动获取当前脚本所在的绝对路径 (例如: .../scripts/core)
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# 2. 向上回退两级，找到项目根目录 (即 scripts 的上一级)
-PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
-
-# 3. 拼接出数据目录的路径
-DATA_DIR="$PROJECT_ROOT/data"
-
-# --- 结束替换 ---
-
-ARG1="${1:-}"
+REPO_ROOT="/home/2511803104/222"
+DATA_DIR="${REPO_ROOT}/data/subjects"
 
 # 颜色美化
 GREEN='\033[0;32m'
@@ -38,12 +26,12 @@ NC='\033[0m'
 
 # 从文件中提取字段
 extract_field() {
-    grep "^$1:" "$ARG1" | head -1 | sed 's/^[^:]*: //' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+    grep "^$2:" "$1" | head -1 | sed 's/^[^:]*: //' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
 }
 
 # 获取科目名
 get_subject() {
-    echo "$ARG1" | sed 's|.*/data/subjects/||' | cut -d'/' -f1
+    echo "$1" | sed 's|.*/data/subjects/||' | cut -d'/' -f1
 }
 
 # 1. 统计各科目错题数量（条形图）
@@ -57,7 +45,6 @@ stats_subject() {
     # 遍历所有md文件
     while IFS= read -r file; do
         local subject=$(get_subject "$file")
-        : "${count_map:=}"
         ((count_map["$subject"]++))
         ((total++))
     done < <(find "$DATA_DIR" -name "*.md")
@@ -185,7 +172,7 @@ show_help() {
 }
 
 # 主入口
-case ${1:-help} in
+case $1 in
     --subject)
         stats_subject
         ;;
@@ -202,7 +189,7 @@ case ${1:-help} in
         show_help
         ;;
     *)
-        echo "未知选项: $ARG1"
+        echo "未知选项: $1"
         show_help
         ;;
 esac
