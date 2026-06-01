@@ -1,49 +1,39 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/bash
 
-# 获取脚本所在的绝对路径
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LOG_DIR="$SCRIPT_DIR/../../data/logs"
-ERR_LOG="$LOG_DIR/error.log"
+# 统一异常处理模块
+# 功能：自动捕获所有错误，生成标准化日志，支持错误回溯
 
-# 检查日志目录是否存在
-if [ ! -d "$LOG_DIR" ]; then
-    echo "Error: Log directory $LOG_DIR does not exist." >&2
-    exit 1
-fi
+# 日志文件路径（自动创建logs目录）
+LOG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." &> /dev/null && pwd )/logs"
+LOG_FILE="$LOG_DIR/error.log"
+mkdir -p "$LOG_DIR"
 
-# 创建日志文件（如果不存在）
-if [ ! -f "$ERR_LOG" ]; then
-    touch "$ERR_LOG" && chmod 644 "$ERR_LOG"
-fi
+# 核心错误处理函数
+handle_error() {
+    local exit_code=$?
+    local failed_command="$BASH_COMMAND"
+    local line_number="$LINENO"
+    local script_name="$0"
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
-# 检查日志文件的权限
-if [[ ! -w "$ERR_LOG" ]]; then
-    echo "Error: No write permission to log file $ERR_LOG" >&2
-    exit 1
-fi
+    # 写入错误日志
+    echo "[$timestamp] ERROR in $script_name (line $line_number):" >> "$LOG_FILE"
+    echo "  Command: $failed_command" >> "$LOG_FILE"
+    echo "  Exit code: $exit_code" >> "$LOG_FILE"
+    echo "  ----------------------------------------" >> "$LOG_FILE"
 
-log_info() {
-    echo "[$(date '+%F %T')] INFO: $*" >> "$ERR_LOG"
-}
-log_error() {
-    echo "[$(date '+%F %T')] ERROR: $*" >> "$ERR_LOG"
-}
+    # 给用户友好提示
+    echo "❌ 脚本执行出错！"
+    echo "  错误详情已记录到：$LOG_FILE"
+    echo "  请查看日志排查问题"
 
-handle() {
-    local type="$1"
-    local msg="$2"
-    case "$type" in
-        file_not_found) log_error "file_not_found: $msg" ;;
-        permission_denied) log_error "permission_denied: $msg" ;;
-        invalid_param) log_error "invalid_param: $msg" ;;
-        *) log_error "unknown: $type $msg" ;;
-    esac
+    exit $exit_code
 }
 
-# 当被直接执行时给出提示
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    echo "Usage: source $(basename "$0")"
-    echo "       handle <type> <message>"
-    exit 0
-fi
+# 捕获所有错误信号（只要有命令执行失败，就自动调用handle_error）
+trap 'handle_error' ERR
+
+# 开启严格模式（让脚本更健壮）
+set -o errexit  # 任何命令失败立即退出
+set -o nounset  # 使用未定义变量时报错
+set -o pipefail # 管道中任何命令失败，整个管道返回失败

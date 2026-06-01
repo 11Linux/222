@@ -2,6 +2,18 @@
 # 全场景错题管理系统 错题编辑模块
 # 刘瑞婷 2026-05-24
 
+# 导入异常处理模块
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+EXCEPTION_HANDLER_PATH="$SCRIPT_DIR/exception_handler.sh"
+
+# 检查异常处理模块是否存在
+if [ -f "$EXCEPTION_HANDLER_PATH" ]; then
+    source "$EXCEPTION_HANDLER_PATH"
+else
+    echo "Error: exception_handler.sh not found at $EXCEPTION_HANDLER_PATH"
+    exit 1
+fi
+
 # 加载通用工具函数
 source ../utils/common.sh
 
