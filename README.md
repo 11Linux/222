@@ -27,6 +27,7 @@ cd ~/222/scripts/core
 ./add_note.sh
 
 # 按照提示依次选择科目、输入题干、答案、解析和标签即可
+```
 
 ## 二、编辑模块（edit_note.sh）
 ### 功能
@@ -37,6 +38,7 @@ cd ~/222/scripts/core
 - 自动更新错题的最后修改时间
 
 ###使用方法
+```bash
 # 进入脚本目录
 cd ~/222/scripts/core
 
@@ -49,7 +51,7 @@ cd ~/222/scripts/core
 # 脚本会自动查找并显示当前错题信息
 # 按照提示选择要修改的字段序号
 # 输入新内容后按回车确认即可完成修改
-
+```
 
 #错题检索与统计分析模块
 
@@ -93,6 +95,7 @@ cd ~/222/scripts/core
 
 # 查看帮助
 ./query_note.sh -h
+```
 
 ## 二、统计模块 (stat_report.sh)
 
@@ -120,4 +123,4 @@ cd ~/222/scripts/core
 
 # 查看帮助
 ./stat_report.sh -h
-
+```
