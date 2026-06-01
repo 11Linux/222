@@ -99,4 +99,10 @@ notify-send "复习提醒" "今日复习: $(basename "$choice")"
 # 复习打卡功能
 read -p "是否完成复习？(y/n): " completed
 if [[ $completed == "y" ]]; then
-    echo "[$(date '+%F %T')] 完成复习: $(basename "$choice")" >> "$REVIEW_LOG"  
+    echo "[$(date '+%F %T')] 完成复习: $(basename "$choice")" >> "$REVIEW_LOG"
+    notify-send "复习完成" "您已完成今日复习: $(basename "$choice")"
+    echo "✅ 已打卡"
+else
+    echo "[$(date '+%F %T')] 未完成复习: $(basename "$choice")" >> "$REVIEW_LOG"
+    notify-send "复习提醒" "您未完成今日复习: $(basename "$choice")"
+fi
