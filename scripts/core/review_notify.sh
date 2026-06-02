@@ -86,6 +86,7 @@ update_markdown_file() {
 
     # 写回文件
     echo "$content" > "$file_path"
+}
 
 # ===== 主流程 =====
 # 收集所有错题
