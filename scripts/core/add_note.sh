@@ -16,7 +16,8 @@ fi
 
 
 # 加载通用工具函数
-source ../utils/common.sh
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../utils/common.sh
 
 echo "====================================="
 echo "        错题录入系统"
