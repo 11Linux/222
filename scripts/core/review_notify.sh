@@ -102,25 +102,24 @@ done
 
 # 没有需要复习的题目
 if [ ${#to_review[@]} -eq 0 ]; then
-    msg="[$(date '+%F %T')] 今日无待复习错题"
+    msg="[$(date '+%F %T')] No questions to review today"
     echo "$msg" | tee -a "$REVIEW_LOG"
-    printf "复习提醒：今日无待复习错题\n" | xmessage -center -file -
+    xmessage -center "No questions to review today"
     exit 0
 fi
 
 # 随机挑选 1 道
 choice=${to_review[$RANDOM % ${#to_review[@]}]}
-echo "[$(date '+%F %T')] 今日复习: $(basename "$choice")" >> "$REVIEW_LOG"
+echo "[$(date '+%F %T')] Review today: $(basename "$choice")" >> "$REVIEW_LOG"
 subject_name=$(basename "$choice" .txt)
-printf "复习提醒：今日复习：%s\n" "$subject_name" | xmessage -center -file -
+xmessage -center "Review today: $subject_name"
 
 # 复习打卡功能
-read -p "是否完成复习？(y/n): " completed
+read -p "Have you finished reviewing? (y/n): " completed
 if [[ $completed == "y" ]]; then
-    echo "[$(date '+%F %T')] 完成复习: $(basename "$choice")" >> "$REVIEW_LOG"
-    subject_name=$(basename "$choice" .txt)
-    printf "复习完成：您已完成今日复习：%s\n" "$subject_name" | xmessage -center -file -
-    echo "✅ 已打卡"
+    echo "[$(date '+%F %T')] Finished reviewing: $(basename "$choice")" >> "$REVIEW_LOG"
+    xmessage -center "Finished reviewing: $subject_name"
+    echo "✅ Checked"
 
     # 读取Markdown文件，更新复习状态和次数
     review_status=$(grep "review_status" "$choice" | awk '{print $2}' | tr -d '"')
@@ -141,7 +140,6 @@ if [[ $completed == "y" ]]; then
         update_markdown_file "$choice" "$new_status" "$review_count"
     fi
 else
-    subject_name=$(basename "$choice" .txt)
-    echo "[$(date '+%F %T')] 未完成复习: $subject_name" >> "$REVIEW_LOG"
-    printf "复习提醒：您未完成今日复习：%s\n" "$subject_name" | xmessage -center -file -
+    echo "[$(date '+%F %T')] Not finished reviewing: $subject_name" >> "$REVIEW_LOG"
+    xmessage -center "Not finished reviewing: $subject_name"
 fi
