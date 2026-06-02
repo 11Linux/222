@@ -86,7 +86,6 @@ update_markdown_file() {
 
     # 写回文件
     echo "$content" > "$file_path"
-}
 
 # ===== 主流程 =====
 # 收集所有错题
@@ -111,15 +110,15 @@ fi
 # 随机挑选 1 道
 choice=${to_review[$RANDOM % ${#to_review[@]}]}
 echo "[$(date '+%F %T')] 今日复习: $(basename "$choice")" >> "$REVIEW_LOG"
-review_question=$(basename "$choice")
-xmessage -center "复习提醒" "今日复习: $review_question"
+subject_name=$(basename "$choice" .txt)
+xmessage -center "复习提醒" "今日复习: $subject_name"
 
 # 复习打卡功能
 read -p "是否完成复习？(y/n): " completed
 if [[ $completed == "y" ]]; then
     echo "[$(date '+%F %T')] 完成复习: $(basename "$choice")" >> "$REVIEW_LOG"
-    reviewed_question=$(basename "$choice")
-    xmessage -center "复习完成" "您已完成今日复习: $reviewed_question"
+    subject_name=$(basename "$choice" .txt)
+    xmessage -center "复习完成" "您已完成今日复习: $subject_name"
     echo "✅ 已打卡"
 
     # 读取Markdown文件，更新复习状态和次数
@@ -141,7 +140,7 @@ if [[ $completed == "y" ]]; then
         update_markdown_file "$choice" "$new_status" "$review_count"
     fi
 else
-    echo "[$(date '+%F %T')] 未完成复习: $(basename "$choice")" >> "$REVIEW_LOG"
-    not_reviewed_question=$(basename "$choice")
-    xmessage -center "复习提醒" "您未完成今日复习: $not_reviewed_question"
+    subject_name=$(basename "$choice" .txt)
+    echo "[$(date '+%F %T')] 未完成复习: $subject_name" >> "$REVIEW_LOG"
+    xmessage -center "复习提醒" "您未完成今日复习: $subject_name"
 fi
