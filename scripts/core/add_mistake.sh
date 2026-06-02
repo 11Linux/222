@@ -1,43 +1,22 @@
 #!/bin/bash
 
-# 1. 定义数据存放的目录（根据你刚才建的目录结构）
-DATA_DIR="../data"
+# --- 1. 智能定位路径 (确保在任何目录下运行都能找到文件) ---
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+DATA_FILE="$PROJECT_ROOT/data/mistakes.txt"
 
-# 2. 提示用户输入信息
-echo "--------------------------"
-echo "   欢迎使用错题录入系统"
-echo "--------------------------"
+# 确保目录存在
+mkdir -p "$(dirname "$DATA_FILE")"
 
-# 读取科目
-read -p "请输入科目 (如 数学/英语): " subject
+# --- 2. 获取输入 (优先使用参数，否则交互输入) ---
+if [ -n "$1" ]; then SUBJECT="$1"; else read -p "请输入科目: " SUBJECT; fi
+if [ -n "$2" ]; then CONTENT="$2"; else read -p "请输入错题内容: " CONTENT; fi
+if [ -n "$3" ]; then NOTE="$3"; else read -p "请输入备注: " NOTE; fi
 
-# 读取标签
-read -p "请输入错误标签 (如 粗心/概念不清): " tag
+# --- 3. 格式化并写入 (关键修复点) ---
+TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 
-# 读取题目描述
-read -p "请输入题目内容 (简要题干): " description
+# 【注意】竖线 | 两边必须各有一个空格，这是测试脚本识别的关键
+echo "${TIMESTAMP} | ${SUBJECT} | ${CONTENT} | ${NOTE}" >> "$DATA_FILE"
 
-# 读取正确解法
-read -p "请输入正确解法/解析: " solution
-
-# 3. 自动生成文件名（使用日期时间戳，防止重名）
-# 格式如：20260525_1400_math.txt
-timestamp=$(date +%Y%m%d_%H%M%S)
-filename="${timestamp}_${subject}.txt"
-
-# 4. 将内容写入文件
-# 我们把它保存到 data 目录下
-cat <<EOF > "${DATA_DIR}/${filename}"
-科目: $subject
-标签: $tag
-时间: $(date "+%Y-%m-%d %H:%M:%S")
---------------------------------
-【错误描述】:
-$description
-
-【正确解法】:
-$solution
---------------------------------
-EOF
-
-echo "✅ 录入成功！文件已保存为：${DATA_DIR}/${filename}"
+echo "✅ 错题已录入！[${SUBJECT}] -> 新标签：[${NOTE}]"

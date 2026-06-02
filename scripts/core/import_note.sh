@@ -47,58 +47,89 @@ SUCCESS_COUNT=0
 FAIL_COUNT=0
 LINE_NUM=0
 
+# 获取当前时间 (用于生成 create_time)
+CURRENT_TIME=$(date '+%Y-%m-%d %H:%M:%S')
+DATE_DIR=$(date '+%Y/%m/%d') # 用于文件夹路径
+
 # 5. 核心循环：逐行读取
 while IFS= read -r line || [ -n "$line" ]; do
     LINE_NUM=$((LINE_NUM + 1))
 
-    # 跳过空行或纯空格行
-    if [[ -z "${line// /}" ]]; then
+    # --- A. 数据清洗 ---
+    # 1. 去除首尾空格
+clean_line="$(echo -e "${line}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+    # 2. 跳过空行
+    if [[ -z "$clean_line" ]]; then
         continue
     fi
 
-    # --- 关键逻辑：调用现有的单条录入逻辑 ---
-    # 假设你的单条录入脚本叫 add_note.sh
-    # 注意：这里我们调用同目录下的 add_note.sh
-    # 如果你没有 add_note.sh，你需要在这里直接写保存文件的逻辑
-
-    # 1. 定义你的错题存储文件路径 (请根据实际情况修改这个文件名)
-MISTAKE_DB_FILE="$PROJECT_ROOT/data/mistakes.txt"
-
-# 2. 确保文件存在，如果不存在就创建一个
-if [ ! -f "$MISTAKE_DB_FILE" ]; then
-    touch "$MISTAKE_DB_FILE"
-fi
-
-echo "DEBUG: 正在处理第 $line_num 行..."
-
-# 3. 【可选】简单的查重逻辑 (防止导入重复数据)
-# 如果你的题目格式很特殊，这里可能需要更复杂的 grep 写法
-if grep -qF "$question" "$MISTAKE_DB_FILE"; then
-    echo "⚠️ [跳过] 第 $line_num 行: 题目已存在 -> $question"
-else
-    # 4. 直接写入！(模拟 add_note.sh 的功能)
-    # 注意：这里的格式 "时间|科目|题目|答案" 需要和你原本 add_note.sh 写入的格式保持一致
-    # 否则以后查看错题时可能会乱码或格式不对
-    echo "$(date '+%Y-%m-%d %H:%M:%S') | $SUBJECT | $question | $answer" >> "$MISTAKE_DB_FILE"
-
-    if [ $? -eq 0 ]; then
-        echo "✅ [成功] 第 $line_num 行: 写入成功"
-        RESULT=0
+    # 3. 使用 "|" 分隔符切割数据
+    # 假设格式为：科目|题目|答案|解析|原因
+    IFS='|' read -r RAW_SUBJECT Q_TITLE Q_ANSWER Q_ANALYSIS Q_REASON <<< "$clean_line"
+    
+    # 4. 确定最终使用的科目
+    # 逻辑：如果运行脚本时手动指定了科目(如 ./import.sh file.txt 数学)，则优先用指定的；
+    #       否则，使用文档里第一列写的科目；
+    #       如果文档里也没写，就用“默认科目”。
+    if [[ -n "$SUBJECT" && "$SUBJECT" != "默认科目" ]]; then
+        FINAL_SUBJECT="$SUBJECT"
+    elif [[ -n "$RAW_SUBJECT" ]]; then
+        FINAL_SUBJECT="$RAW_SUBJECT"
     else
-        echo "❌ [失败] 第 $line_num 行: 写入文件出错"
-        RESULT=1
-    fi
-fi
+        FINAL_SUBJECT="默认科目"
+    fi 
+    # 5. 设置默认值 (防止某一项为空导致格式错乱)
+    Q_TITLE="${Q_TITLE:-未命名题目}"
+    Q_ANSWER="${Q_ANSWER:-待补充}"
+    Q_ANALYSIS="${Q_ANALYSIS:-暂无解析}"
+    Q_REASON="${Q_REASON:-待分析}"
 
-    # 检查结果
-    if [ $RESULT -eq 0 ]; then
+    # --- B. 确定存储路径 (严格匹配截图中的目录结构) ---
+    # 结构: data/subjects/{科目}/{日期}/
+    TARGET_DIR="$PROJECT_ROOT/data/subjects/${FINAL_SUBJECT}/${DATE_DIR}"
+
+    # 确保目录存在
+    mkdir -p "$TARGET_DIR"
+
+    # --- C. 生成唯一文件名 ---
+    # 使用时间戳+随机数防止重名覆盖，例如: 1716543210_abc.md
+    FILE_NAME="${RANDOM}_${LINE_NUM}.md"
+    TARGET_FILE="$TARGET_DIR/$FILE_NAME"
+
+    # --- D. 写入标准格式内容 (关键步骤) ---
+    cat > "$TARGET_FILE" <<EOF
+---
+id: $RANDOM
+subject: ${FINAL_SUBJECT}
+tags: 批量导入
+create_time: ${CURRENT_TIME}
+update_time: ${CURRENT_TIME}
+review_status: 未复习
+review_count: 0
+---
+
+## 题干
+${Q_TITLE}
+
+## 正确答案
+${Q_ANSWER}
+
+## 解析
+${Q_ANALYSIS}
+
+## 错误原因
+${Q_REASON}
+
+EOF
+
+    # --- E. 检查写入结果 ---
+    if [ $? -eq 0 ]; then
         SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
-        # 打印进度，只显示前 20 个字符避免刷屏
-        echo -e "  ${GREEN}✔ 成功${NC} | 第 $LINE_NUM 行: ${line:0:30}..."
+        echo -e "  ${GREEN}✔ 成功${NC} | 已生成: $TARGET_FILE"
     else
         FAIL_COUNT=$((FAIL_COUNT + 1))
-        echo -e "  ${RED}✘ 失败${NC} | 第 $LINE_NUM 行: 写入出错"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] Line $LINE_NUM: $line" >> "$PROJECT_ROOT/data/logs/error.log"
+        echo -e "  ${RED}✘ 失败${NC} | 无法写入: $TARGET_FILE"
     fi
 
 done < "$INPUT_FILE"
