@@ -3,6 +3,11 @@
 # 每日随机抽取 1 道当天需要复习的错题
 # 复习间隔遵循艾宾浩斯曲线：1 2 4 7 15 30 天
 
+# 从 MD 文件中提取字段（和检索模块统一规则）
+extract_field() {
+    grep "^$2:" "$1" | head -1 | sed 's/^[^:]*: //' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+}
+
 # 导入异常处理模块和配置
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 EXCEPTION_HANDLER_PATH="$SCRIPT_DIR/exception_handler.sh"
@@ -90,11 +95,11 @@ update_markdown_file() {
 
 # ===== 主流程 =====
 # 收集所有错题
-mapfile -t candidates < <(find "$DATA_DIR/subjects" -type f -name "*.txt")
+mapfile -t candidates < <(find "$DATA_DIR/subjects" -type f -name "*.md")
 
 to_review=()
 for f in "${candidates[@]}"; do
-    id=$(basename "$f" .txt)
+    id=$(extract_field "$f" "id")
     if needs_review "$id"; then
         to_review+=("$f")
     fi
@@ -111,7 +116,7 @@ fi
 # 随机挑选 1 道
 choice=${to_review[$RANDOM % ${#to_review[@]}]}
 echo "[$(date '+%F %T')] Review today: $(basename "$choice")" >> "$REVIEW_LOG"
-subject_name=$(basename "$choice" .txt)
+subject_name=$(basename "$choice" .md)
 xmessage -center "Review today: $subject_name"
 
 # 复习打卡功能
