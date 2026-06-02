@@ -104,20 +104,20 @@ done
 if ((${#to_review[@]} == 0)); then
     msg="[$(date '+%F %T')] 今日无待复习错题"
     echo "$msg" | tee -a "$REVIEW_LOG"
-    notify-send "复习提醒" "今日无待复习错题"
+    xmessage -center "复习提醒" "今日无待复习错题"
     exit 0
 fi
 
 # 随机挑选 1 道
 choice=${to_review[$RANDOM % ${#to_review[@]}]}
 echo "[$(date '+%F %T')] 今日复习: $(basename "$choice")" >> "$REVIEW_LOG"
-notify-send "复习提醒" "今日复习: $(basename "$choice")"
+xmessage -center "复习提醒" "今日复习: $(basename "$choice")"
 
 # 复习打卡功能
 read -p "是否完成复习？(y/n): " completed
 if [[ $completed == "y" ]]; then
     echo "[$(date '+%F %T')] 完成复习: $(basename "$choice")" >> "$REVIEW_LOG"
-    notify-send "复习完成" "您已完成今日复习: $(basename "$choice")"
+    xmessage -center "复习完成" "您已完成今日复习: $(basename "$choice")"
     echo "✅ 已打卡"
 
     # 读取Markdown文件，更新复习状态和次数
@@ -140,5 +140,5 @@ if [[ $completed == "y" ]]; then
     fi
 else
     echo "[$(date '+%F %T')] 未完成复习: $(basename "$choice")" >> "$REVIEW_LOG"
-    notify-send "复习提醒" "您未完成今日复习: $(basename "$choice")"
+    xmessage -center "复习提醒" "您未完成今日复习: $(basename "$choice")"
 fi
