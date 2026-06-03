@@ -2,6 +2,10 @@
 # 全场景错题管理系统 错题编辑模块
 # 刘瑞婷 2026-05-24
 
+# 自动定位项目根目录
+PROJECT_ROOT=$(cd "$(dirname "$0")/../../" && pwd)
+export PROJECT_ROOT
+
 # 导入异常处理模块
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 EXCEPTION_HANDLER_PATH="$SCRIPT_DIR/exception_handler.sh"
@@ -15,7 +19,7 @@ else
 fi
 
 # 加载通用工具函数
-source ../utils/common.sh
+source "$PROJECT_ROOT/scripts/utils/common.sh"
 
 # 检查参数是否正确
 if [ $# -ne 1 ]; then

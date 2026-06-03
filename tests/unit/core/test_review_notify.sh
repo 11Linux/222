@@ -107,6 +107,7 @@ test_04_needs_review_first_question() {
 test_05_get_next_review_interval() {
     echo "--- 测试用例5：测试艾宾浩斯间隔计算 ---"
     source "$REVIEW_NOTIFY_PATH" >/dev/null 2>&1
+<<<<<<< HEAD
     
     # 确保INTERVALS数组已定义
     if [ -z "${INTERVALS+x}" ]; then
@@ -125,6 +126,11 @@ test_05_get_next_review_interval() {
     else
         assert "复习0次对应间隔1天" "false"
     fi
+=======
+    # 复习0次，间隔应该是1天
+    local interval=$(get_next_review "10001")
+    assert "复习0次对应间隔1天" "$interval -eq 1"
+>>>>>>> a032aecaebf7eea61d189b1ecc57feefec5b98e6
 }
 
 test_06_update_markdown_status() {
@@ -167,4 +173,8 @@ if [ $failed -eq 0 ]; then
     exit 0
 else
     exit 1
+<<<<<<< HEAD
 fi 
+=======
+fi  
+>>>>>>> a032aecaebf7eea61d189b1ecc57feefec5b98e6

@@ -2,6 +2,10 @@
 # 全场景错题管理系统 错题录入模块
 # 刘瑞婷 2026-05-24
 
+# 自动定位项目根目录
+PROJECT_ROOT=$(cd "$(dirname "$0")/../../" && pwd)
+export PROJECT_ROOT
+
 # 导入异常处理模块
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 EXCEPTION_HANDLER_PATH="$SCRIPT_DIR/exception_handler.sh"
@@ -16,8 +20,12 @@ fi
 
 
 # 加载通用工具函数
+<<<<<<< HEAD
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../utils/common.sh
+=======
+source "$PROJECT_ROOT/scripts/utils/common.sh"
+>>>>>>> a032aecaebf7eea61d189b1ecc57feefec5b98e6
 
 echo "====================================="
 echo "        错题录入系统"
