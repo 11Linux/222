@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # review_notify.sh
 # 每日随机抽取 1 道当天需要复习的错题
 # 复习间隔遵循艾宾浩斯曲线：1 2 4 7 15 30 天
@@ -45,35 +45,77 @@ INTERVALS=(1 2 4 7 15 30)
 
 # 计算下一复习间隔天数
 get_next_review() {
-    local id=$1
-    local count=$(grep -c "$id" "$REVIEW_LOG" 2>/dev/null || echo 0)
-    local idx=$(( count < ${#INTERVALS[@]} ? count : ${#INTERVALS[@]} - 1 ))
-    echo "${INTERVALS[$idx]}"
+    local id="$1"
+    local count=0
+    
+    # 检查日志文件是否存在
+    if [ -f "$REVIEW_LOG" ]; then
+        # 安全获取复习次数，确保结果是数字
+        local temp_count
+        temp_count=$(grep -c -- "$id" "$REVIEW_LOG" 2>/dev/null)
+        
+        # 验证结果是否为数字，如果不是则设为0
+        if [[ "$temp_count" =~ ^[0-9]+$ ]]; then
+            count=$temp_count
+        else
+            count=0
+        fi
+    fi
+    
+    # 检查INTERVALS数组是否存在且不为空
+    if [ -z "${INTERVALS+x}" ] || [ ${#INTERVALS[@]} -eq 0 ]; then
+        # 如果数组不存在或为空，使用默认间隔
+        INTERVALS=(1 2 4 7 15 30)
+    fi
+    
+    # 计算数组长度和当前索引
+    local total_intervals=${#INTERVALS[@]}
+    local current_idx
+    
+    if (( count >= total_intervals )); then
+        current_idx=$(( total_intervals - 1 ))
+    else
+        current_idx=$count
+    fi
+    
+    # 确保索引在有效范围内
+    if (( current_idx < 0 )); then
+        current_idx=0
+    elif (( current_idx >= total_intervals )); then
+        current_idx=$(( total_intervals - 1 ))
+    fi
+    
+    # 返回对应的间隔天数
+    echo "${INTERVALS[$current_idx]}"
 }
+
 
 # 判断今天是否需要复习该题
 needs_review() {
     local id=$1
+    # 先判断有没有该id的记录，没有就直接返回需要复习
+    if ! grep -q -- "$id" "$REVIEW_LOG"; then
+        return 0
+    fi
     local last_date
     last_date=$(grep "$id" "$REVIEW_LOG" | tail -1 | awk '{print $1}' | sed 's/\[//; s/\]//')
-    [[ -z $last_date ]] && return 0        # 第一次出现，立即复习
 
     # 确保 last_date 是有效的日期格式
     if ! date -d "$last_date" +%F > /dev/null 2>&1; then
         echo "Error: Invalid date '$last_date'"
-        return 1
+        return 0
     fi
 
     local next_review_date
     local interval=$(get_next_review "$id")
     if ! [[ "$interval" =~ ^[0-9]+$ ]]; then
         echo "Error: Invalid interval '$interval'"
-        return 1
+        return 0
     fi
 
-    next_review_date=$(date -d "$last_date + $interval days" +%F) # 计算下一个复习日期
-    [[ $(date +%F) == "$next_review_date" ]] && return 0 # 如果今天就是复习日，则返回0
-    return 1 # 否则返回1
+    next_review_date=$(date -d "$last_date + $interval days" +%F)
+    [[ $(date +%F) == "$next_review_date" ]] && return 0
+    return 1
 }
 
 # 更新Markdown文件中的复习状态和次数
@@ -110,7 +152,7 @@ if [ ${#to_review[@]} -eq 0 ]; then
     msg="[$(date '+%F %T')] No questions to review today"
     echo "$msg" | tee -a "$REVIEW_LOG"
     xmessage -center "No questions to review today"
-    exit 0
+    return 0
 fi
 
 # 随机挑选 1 道
