@@ -100,7 +100,7 @@ needs_review() {
     local last_date
     last_date=$(grep "$id" "$REVIEW_LOG" | tail -1 | awk '{print $1}' | sed 's/\[//; s/\]//')
 
-    # 确保 last_date 是有效的日期格式
+    # 确保 last_date 是有效的日期格式 → 格式错误，直接按需要复习处理，返回0
     if ! date -d "$last_date" +%F > /dev/null 2>&1; then
         echo "Error: Invalid date '$last_date'"
         return 0
