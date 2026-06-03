@@ -14,7 +14,8 @@ fi
 # ============================================
 
 # 仓库根目录
-REPO_ROOT="/home/2511803104/222"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 DATA_DIR="${REPO_ROOT}/data/subjects"
 
 # 颜色
