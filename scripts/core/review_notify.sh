@@ -45,10 +45,6 @@ INTERVALS=(1 2 4 7 15 30)
 
 # 计算下一复习间隔天数
 get_next_review() {
-    local id=$1
-    local count=$(grep -c "$id" "$REVIEW_LOG" 2>/dev/null || echo 0)
-    local idx=$(( count < ${#INTERVALS[@]} ? count : ${#INTERVALS[@]} - 1 ))
-    echo "${INTERVALS[$idx]}"
     local id="$1"
     local count=0
 
@@ -103,12 +99,10 @@ needs_review() {
     fi
     local last_date
     last_date=$(grep "$id" "$REVIEW_LOG" | tail -1 | awk '{print $1}' | sed 's/\[//; s/\]//')
-    [[ -z $last_date ]] && return 0        # 第一次出现，立即复习
 
     # 确保 last_date 是有效的日期格式
     if ! date -d "$last_date" +%F > /dev/null 2>&1; then
         echo "Error: Invalid date '$last_date'"
-        return 1
         return 0
     fi
 
@@ -116,13 +110,9 @@ needs_review() {
     local interval=$(get_next_review "$id")
     if ! [[ "$interval" =~ ^[0-9]+$ ]]; then
         echo "Error: Invalid interval '$interval'"
-        return 1
         return 0
     fi
 
-    next_review_date=$(date -d "$last_date + $interval days" +%F) # 计算下一个复习日期
-    [[ $(date +%F) == "$next_review_date" ]] && return 0 # 如果今天就是复习日，则返回0
-    return 1 # 否则返回1
     next_review_date=$(date -d "$last_date + $interval days" +%F)
     [[ $(date +%F) == "$next_review_date" ]] && return 0
     return 1
@@ -147,12 +137,10 @@ update_markdown_file() {
 
 # ===== 主流程 =====
 # 收集所有错题
-mapfile -t candidates < <(find "$DATA_DIR/subjects" -type f -name "*.txt")
 mapfile -t candidates < <(find "$DATA_DIR/subjects" -type f -name "*.md")
 
 to_review=()
 for f in "${candidates[@]}"; do
-    id=$(basename "$f" .txt)
     id=$(extract_field "$f" "id")
     if needs_review "$id"; then
         to_review+=("$f")
@@ -160,30 +148,22 @@ for f in "${candidates[@]}"; do
 done
 
 # 没有需要复习的题目
-if ((${#to_review[@]} == 0)); then
-    msg="[$(date '+%F %T')] 今日无待复习错题"
 if [ ${#to_review[@]} -eq 0 ]; then
     msg="[$(date '+%F %T')] No questions to review today"
     echo "$msg" | tee -a "$REVIEW_LOG"
-    notify-send "复习提醒" "今日无待复习错题"
-    exit 0
     xmessage -center "No questions to review today"
     return 0
 fi
 
 # 随机挑选 1 道
 choice=${to_review[$RANDOM % ${#to_review[@]}]}
-echo "[$(date '+%F %T')] 今日复习: $(basename "$choice")" >> "$REVIEW_LOG"
-notify-send "复习提醒" "今日复习: $(basename "$choice")"
 echo "[$(date '+%F %T')] Review today: $(basename "$choice")" >> "$REVIEW_LOG"
 subject_name=$(basename "$choice" .md)
 xmessage -center "Review today: $subject_name"
 
 # 复习打卡功能
-read -p "是否完成复习？(y/n): " completed
 read -p "Have you finished reviewing? (y/n): " completed
 if [[ $completed == "y" ]]; then
-    echo "[$(date '+%F %T')] 完成复习: $(basename "$choice")" >> "$REVIEW_LOG"  
     echo "[$(date '+%F %T')] Finished reviewing: $(basename "$choice")" >> "$REVIEW_LOG"
     xmessage -center "Finished reviewing: $subject_name"
     echo "✅ Checked"
