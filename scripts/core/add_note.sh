@@ -20,6 +20,7 @@ fi
 
 
 # 加载通用工具函数
+source "$PROJECT_ROOT/scripts/utils/common.sh"
 
 echo "====================================="
 echo "        错题录入系统"
