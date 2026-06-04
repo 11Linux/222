@@ -32,7 +32,7 @@ id=$1
 echo "正在查找ID为 $id 的错题..."
 
 # 全局搜索该ID的错题文件
-file_path=$(find ../../data/subjects -name "*${id}_*.md" -type f)
+file_path=$(find ../../data/subjects -name "*${id}_*.md" -type f | head -n 1)
 
 if [ -z "$file_path" ]; then
     log "ERROR" "未找到ID为 $id 的错题"
