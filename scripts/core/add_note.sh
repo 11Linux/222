@@ -20,12 +20,6 @@ fi
 
 
 # 加载通用工具函数
-<<<<<<< HEAD
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/../utils/common.sh
-=======
-source "$PROJECT_ROOT/scripts/utils/common.sh"
->>>>>>> a032aecaebf7eea61d189b1ecc57feefec5b98e6
 
 echo "====================================="
 echo "        错题录入系统"
