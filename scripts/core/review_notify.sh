@@ -175,12 +175,17 @@ if [[ $completed == "y" ]]; then
     if [[ -z "$review_status" || -z "$review_count" ]]; then
         echo "Error: Unable to read review status or count from $choice"
     else
+        # 验证review_count是数字，如果不是则设置为0
+        if ! [[ "$review_count" =~ ^[0-9]+$ ]]; then
+            review_count=0
+        fi
+        
         if [[ "$review_status" == "未复习" ]]; then
             new_status="已复习"
-            ((review_count++))
+            review_count=$((review_count + 1))
         else
             new_status="已复习"
-            ((review_count++))
+            review_count=$((review_count + 1))
         fi
 
         # 更新Markdown文件
