@@ -1,0 +1,101 @@
+7d836ab,2026-06-04,lxt1128,Update install_cron.sh
+a5477ec,2026-06-03,lxt1128,Update test_review_notify.sh
+3e4ead1,2026-06-03,lxt1128,Update review_notify.sh：实现数据接口，添加弹窗提醒
+b92964e,2026-06-03,fanhijihang,Delete stat_report.sh
+99f10b4,2026-06-03,fanhijihang,Delete query_note.sh
+ca6d6f6,2026-06-03,fanhijihang,Add files via upload
+53e5524,2026-06-03,fanhijihang,Add files via upload
+9b382a4,2026-06-02,fanjihang,统计模块
+066d79d,2026-06-03,lxt1128,Update review_notify.sh
+66ea039,2026-06-02,1i345,feat: 升级批量导入功能
+9389652,2026-06-03,lxt1128,Update test_review_notify.sh
+14abbe6,2026-06-03,lxt1128,Update install_cron.sh
+c9c843d,2026-06-03,lxt1128,Update review_notify.sh
+bf0ab75,2026-06-03,lxt1128,Update review_notify.sh
+e8559cc,2026-06-03,lxt1128,Update review_notify.sh
+91c753c,2026-06-03,root,完成合并操作
+35be5a8,2026-06-03,root,复习模块v2.0：实现数据对接、添加弹窗提醒，更新测试脚本
+a032aec,2026-06-03,刘瑞婷,Merge branch 'main' of github.com:11Linux/222 into main
+cea5124,2026-06-03,刘瑞婷,修复edit_note.sh环境变量未定义问题
+40e4267,2026-06-03,lxt1128,Update test_review_notify.sh
+74b217d,2026-06-03,刘瑞婷,修复add_note.sh环境变量未定义问题
+18b9469,2026-06-03,lxt1128,Update install_cron.sh
+1a6245a,2026-06-03,lxt1128,Update review_notify.sh
+6098e09,2026-06-02,fanjihang,统计模块
+6368309,2026-06-02,lxt1128,Update review_notify.sh
+bdcbbf4,2026-06-02,lxt1128,Update review_notify.sh
+4c15133,2026-06-02,1i345,refactor: 重构项目目录结构，实现模块化分离
+0c4f178,2026-06-02,lxt1128,Update review_notify.sh
+653bc58,2026-06-02,lxt1128,Update review_notify.sh
+6c9fd8c,2026-06-02,lxt1128,Update review_notify.sh
+230848c,2026-06-02,lxt1128,Update review_notify.sh
+2aa21a9,2026-06-02,lxt1128,Update global.conf
+6796a88,2026-06-02,lxt1128,Update global.conf
+17c919d,2026-06-02,root,Update review log and add new logs directory
+f9bad35,2026-06-02,lxt1128,Update review_notify.sh：notify-send 替换为 xmessage
+56f70fb,2026-06-02,1i345,Merge pull request #1 from 11Linux/rui-sync
+8797d8f,2026-06-02,1i345,feat: 完成核心功能开发（批量标签、导出、删除）
+95ad9a6,2026-06-02,1i345,feat: 完成批量导入功能 import_note.sh，支持查重与统计
+80aa548,2026-06-01,1i345,merge: 解决 global.conf 冲突
+f33b9c3,2026-06-01,1i345,fix: 修复统计脚本的路径和变量未定义问题
+ec130f9,2026-06-01,1i345,Rename data/20260525_141122_数学.txt to data/subject/数学
+05bb860,2026-06-01,lxt1128,Update review_notify.sh：读取并更新Markdown文件
+c2949f5,2026-06-01,lxt1128,Update template_utils.sh
+355cee5,2026-06-01,lxt1128,Create template_utils.sh
+e93832f,2026-06-01,lxt1128,Delete bin directory
+610e660,2026-06-01,lxt1128,Update review_notify.sh：完善复习打卡功能
+fd9a9a6,2026-06-01,lxt1128,Update global.conf
+a9410af,2026-06-01,fanjihang,添加性能测试报告和生成脚本
+6b114ef,2026-06-01,fanjihang,添加性能测试报告
+a28526f,2026-06-01,lxt1128,Update review_notify.sh
+bdcd7fd,2026-06-01,lxt1128,Update exception_handler.sh
+2e2ccae,2026-06-01,fanhijihang,Update README.md
+9ac3193,2026-06-01,Aiauk,Update README.md
+474e3c3,2026-06-01,Aiauk,Update README.md
+ccd0e3e,2026-06-01,Aiauk,Update README.md
+d658ce9,2026-06-01,Aiauk,Update README.md
+61e2ad4,2026-06-01,Aiauk,Update README.md
+5271235,2026-06-01,fanjihang,添加使用说明文档
+c0e92aa,2026-06-01,fanjihang,添加使用说明文档
+9e19ba7,2026-06-01,Aiauk,Add files via upload
+20b9a3d,2026-06-01,Aiauk,Delete exception_handler.sh
+e9dd07b,2026-06-01,Aiauk,Delete edit_note.sh
+6fa1427,2026-06-01,Aiauk,Delete add_note.sh
+b44d7f4,2026-06-01,Aiauk,Add files via upload
+e2e5e30,2026-06-01,fanjihang,集成异常处理模块
+5f1820b,2026-05-29,root,更新日志文件和脚本
+5d7b9d1,2026-05-29,fanjihang,Merge branch 'main' of https://github.com/11Linux/222 into main
+8990c6e,2026-05-29,fanjihang,添加统计模块
+d0526e8,2026-05-28,root,Merge remote changes into main Merge branch 'main' of https://github.com/11linux/222
+df6ea66,2026-05-28,root,Add error.log
+8059f1d,2026-05-28,root,Remove file1
+5190ffe,2026-05-28,lxt1128,Update exception_handler.sh
+ceb0b96,2026-05-28,lxt1128,Update test_exception_handler.sh
+2dfa9a9,2026-05-28,lxt1128,Update exception_handler.sh
+ecfd216,2026-05-28,lxt1128,Update review_notify.sh
+504ed16,2026-05-28,lxt1128,Delete file1
+c33c2bd,2026-05-28,root,对review_notify.sh和exception_handler.sh进行修改
+9d44320,2026-05-28,root,Reorganize test directory structure and copy existing scripts
+64505fb,2026-05-27,root,添加review_notify and exception_handler测试脚本
+da2024c,2026-05-26,root,feat: 一键安装 crontab 定时任务
+c384514,2026-05-26,root,Merge remote branch 'main' into local 'main' Merge branch 'main' of https://github.com/11linux/222
+ce2a700,2026-05-26,root,feat: 异常处理模块 exception_handler.sh
+7a959a0,2026-05-25,1i345,Merge branch 'main' of github.com:11Linux/222
+9b29396,2026-05-25,1i345,feat: 完成错题录入脚本并录入第一道数学题
+60f45cb,2026-05-25,root,add bin/review_done.sh for daily review check-in
+2385fde,2026-05-25,root,v2.0 加入艾宾浩斯复习间隔算法
+3913dd4,2026-05-25,root,Merge origin/main to incorporate upstream changes Merge branch 'main' of https://github.com/11linux/222
+ada9bd6,2026-05-25,fanjihang,Merge branch 'main' of https://github.com/11Linux/222 into main
+fba1feb,2026-05-25,fanjihang,添加检索模块：支持科目/标签/日期/关键词搜索
+7bb197d,2026-05-25,root,Remove review_notify.sh
+d5c4785,2026-05-25,root,refactor: move review_notify.sh to scripts/core and add log file
+73a3592,2026-05-25,root,feat: 添加 review_notify.sh v1.0，随机抽题
+85d3389,2026-05-25,root,feat: 添加 review_notify.sh v1.0，随机抽题
+76cd309,2026-05-24,Aiauk,Add files via upload
+f0d08c0,2026-05-24,Aiauk,Delete error_note_system directory
+ba4a7c8,2026-05-24,Aiauk,Delete .gitignore
+eff0ecc,2026-05-24,Aiauk,Delete scripts directory
+5531293,2026-05-24,Aiauk,Delete data directory
+48a25a1,2026-05-24,Aiauk,Delete config directory
+b2d3619,2026-05-24,Aiauk,Add files via upload
+2512325,2026-05-24,Aiauk,Add files via upload

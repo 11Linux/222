@@ -27,3 +27,68 @@
 [2026-06-02 09:42:47] Line 4: 题目：勾股定理公式？
 [2026-06-02 09:42:47] Line 5: 答案：a²+b²=c²
 [2026-06-02 09:42:47] Line 7: 这是一道测试用的错题
+[2026-06-01 22:44:02] ERROR in "今日无待复习错题" (line "复习提醒"):
+  Command: notify-send
+  Exit code: 1
+  Working Directory: /root/222/scripts/core
+  ----------------------------------------
+[2026-06-01 22:52:43] ERROR in "今日无待复习错题" (line "复习提醒"):
+  Command: notify-send
+  Exit code: 1
+  Working Directory: /root/222/scripts/core
+  ----------------------------------------
+[2026-06-03 22:44:39] ERROR in 155 (line 0):
+  Command: return
+  Exit code: 1
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------
+[2026-06-03 23:50:14] ERROR in ./review_notify.sh (line 180):
+  Command: ((review_count++))
+  Exit code: 1
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------
+[2026-06-04 00:22:47] ERROR in ./review_notify.sh (line 180):
+  Command: ((review_count++))
+  Exit code: 1
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------
+[2026-06-04 11:09:06] ERROR in $revision_file (line $file_path):
+  Command: cp
+  Exit code: 1
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------
+[2026-06-04 11:26:42] ERROR in ./stat_report.sh (line 135):
+  Command: EOF
+  Exit code: 127
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------
+[2026-06-04 11:27:07] ERROR in ./stat_report.sh (line 135):
+  Command: EOF
+  Exit code: 127
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------
+[2026-06-04 11:27:27] ERROR in ./stat_report.sh (line 135):
+  Command: EOF
+  Exit code: 127
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------
+[2026-06-04 11:28:08] ERROR in ./stat_report.sh (line 135):
+  Command: EOF
+  Exit code: 127
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------
+[2026-06-04 11:28:27] ERROR in ./stat_report.sh (line 135):
+  Command: EOF
+  Exit code: 127
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------
+[2026-06-04 12:11:35] ERROR in ./stat_report.sh (line 135):
+  Command: EOF
+  Exit code: 127
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------
+[2026-06-04 12:15:15] ERROR in "用户输入了无效的科目序号: (line "ERROR"):
+  Command: log
+  Exit code: 127
+  Working Directory: /home/2511803109/error_note_system/scripts/core
+  ----------------------------------------

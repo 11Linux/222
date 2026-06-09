@@ -1,0 +1,101 @@
+2026-06-04 | lxt1128 | Update install_cron.sh
+2026-06-03 | lxt1128 | Update test_review_notify.sh
+2026-06-03 | lxt1128 | Update review_notify.sh：实现数据接口，添加弹窗提醒
+2026-06-03 | fanhijihang | Delete stat_report.sh
+2026-06-03 | fanhijihang | Delete query_note.sh
+2026-06-03 | fanhijihang | Add files via upload
+2026-06-03 | fanhijihang | Add files via upload
+2026-06-02 | fanjihang | 统计模块
+2026-06-03 | lxt1128 | Update review_notify.sh
+2026-06-02 | 1i345 | feat: 升级批量导入功能
+2026-06-03 | lxt1128 | Update test_review_notify.sh
+2026-06-03 | lxt1128 | Update install_cron.sh
+2026-06-03 | lxt1128 | Update review_notify.sh
+2026-06-03 | lxt1128 | Update review_notify.sh
+2026-06-03 | lxt1128 | Update review_notify.sh
+2026-06-03 | root | 完成合并操作
+2026-06-03 | root | 复习模块v2.0：实现数据对接、添加弹窗提醒，更新测试脚本
+2026-06-03 | 刘瑞婷 | Merge branch 'main' of github.com:11Linux/222 into main
+2026-06-03 | 刘瑞婷 | 修复edit_note.sh环境变量未定义问题
+2026-06-03 | lxt1128 | Update test_review_notify.sh
+2026-06-03 | 刘瑞婷 | 修复add_note.sh环境变量未定义问题
+2026-06-03 | lxt1128 | Update install_cron.sh
+2026-06-03 | lxt1128 | Update review_notify.sh
+2026-06-02 | fanjihang | 统计模块
+2026-06-02 | lxt1128 | Update review_notify.sh
+2026-06-02 | lxt1128 | Update review_notify.sh
+2026-06-02 | 1i345 | refactor: 重构项目目录结构，实现模块化分离
+2026-06-02 | lxt1128 | Update review_notify.sh
+2026-06-02 | lxt1128 | Update review_notify.sh
+2026-06-02 | lxt1128 | Update review_notify.sh
+2026-06-02 | lxt1128 | Update review_notify.sh
+2026-06-02 | lxt1128 | Update global.conf
+2026-06-02 | lxt1128 | Update global.conf
+2026-06-02 | root | Update review log and add new logs directory
+2026-06-02 | lxt1128 | Update review_notify.sh：notify-send 替换为 xmessage
+2026-06-02 | 1i345 | Merge pull request #1 from 11Linux/rui-sync
+2026-06-02 | 1i345 | feat: 完成核心功能开发（批量标签、导出、删除）
+2026-06-02 | 1i345 | feat: 完成批量导入功能 import_note.sh，支持查重与统计
+2026-06-01 | 1i345 | merge: 解决 global.conf 冲突
+2026-06-01 | 1i345 | fix: 修复统计脚本的路径和变量未定义问题
+2026-06-01 | 1i345 | Rename data/20260525_141122_数学.txt to data/subject/数学
+2026-06-01 | lxt1128 | Update review_notify.sh：读取并更新Markdown文件
+2026-06-01 | lxt1128 | Update template_utils.sh
+2026-06-01 | lxt1128 | Create template_utils.sh
+2026-06-01 | lxt1128 | Delete bin directory
+2026-06-01 | lxt1128 | Update review_notify.sh：完善复习打卡功能
+2026-06-01 | lxt1128 | Update global.conf
+2026-06-01 | fanjihang | 添加性能测试报告和生成脚本
+2026-06-01 | fanjihang | 添加性能测试报告
+2026-06-01 | lxt1128 | Update review_notify.sh
+2026-06-01 | lxt1128 | Update exception_handler.sh
+2026-06-01 | fanhijihang | Update README.md
+2026-06-01 | Aiauk | Update README.md
+2026-06-01 | Aiauk | Update README.md
+2026-06-01 | Aiauk | Update README.md
+2026-06-01 | Aiauk | Update README.md
+2026-06-01 | Aiauk | Update README.md
+2026-06-01 | fanjihang | 添加使用说明文档
+2026-06-01 | fanjihang | 添加使用说明文档
+2026-06-01 | Aiauk | Add files via upload
+2026-06-01 | Aiauk | Delete exception_handler.sh
+2026-06-01 | Aiauk | Delete edit_note.sh
+2026-06-01 | Aiauk | Delete add_note.sh
+2026-06-01 | Aiauk | Add files via upload
+2026-06-01 | fanjihang | 集成异常处理模块
+2026-05-29 | root | 更新日志文件和脚本
+2026-05-29 | fanjihang | Merge branch 'main' of https://github.com/11Linux/222 into main
+2026-05-29 | fanjihang | 添加统计模块
+2026-05-28 | root | Merge remote changes into main Merge branch 'main' of https://github.com/11linux/222
+2026-05-28 | root | Add error.log
+2026-05-28 | root | Remove file1
+2026-05-28 | lxt1128 | Update exception_handler.sh
+2026-05-28 | lxt1128 | Update test_exception_handler.sh
+2026-05-28 | lxt1128 | Update exception_handler.sh
+2026-05-28 | lxt1128 | Update review_notify.sh
+2026-05-28 | lxt1128 | Delete file1
+2026-05-28 | root | 对review_notify.sh和exception_handler.sh进行修改
+2026-05-28 | root | Reorganize test directory structure and copy existing scripts
+2026-05-27 | root | 添加review_notify and exception_handler测试脚本
+2026-05-26 | root | feat: 一键安装 crontab 定时任务
+2026-05-26 | root | Merge remote branch 'main' into local 'main' Merge branch 'main' of https://github.com/11linux/222
+2026-05-26 | root | feat: 异常处理模块 exception_handler.sh
+2026-05-25 | 1i345 | Merge branch 'main' of github.com:11Linux/222
+2026-05-25 | 1i345 | feat: 完成错题录入脚本并录入第一道数学题
+2026-05-25 | root | add bin/review_done.sh for daily review check-in
+2026-05-25 | root | v2.0 加入艾宾浩斯复习间隔算法
+2026-05-25 | root | Merge origin/main to incorporate upstream changes Merge branch 'main' of https://github.com/11linux/222
+2026-05-25 | fanjihang | Merge branch 'main' of https://github.com/11Linux/222 into main
+2026-05-25 | fanjihang | 添加检索模块：支持科目/标签/日期/关键词搜索
+2026-05-25 | root | Remove review_notify.sh
+2026-05-25 | root | refactor: move review_notify.sh to scripts/core and add log file
+2026-05-25 | root | feat: 添加 review_notify.sh v1.0，随机抽题
+2026-05-25 | root | feat: 添加 review_notify.sh v1.0，随机抽题
+2026-05-24 | Aiauk | Add files via upload
+2026-05-24 | Aiauk | Delete error_note_system directory
+2026-05-24 | Aiauk | Delete .gitignore
+2026-05-24 | Aiauk | Delete scripts directory
+2026-05-24 | Aiauk | Delete data directory
+2026-05-24 | Aiauk | Delete config directory
+2026-05-24 | Aiauk | Add files via upload
+2026-05-24 | Aiauk | Add files via upload
